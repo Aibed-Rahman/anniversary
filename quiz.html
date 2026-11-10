@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Quiz 🎮</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    .quiz-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .quiz-card-page {
+      max-width: 600px;
+      width: 90%;
+    }
+    .back-link {
+      margin-top: 20px;
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back-link:hover {
+      color: var(--accent-pink);
+      text-decoration: underline;
+    }
+    .opt-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tease-msg {
+      color: var(--accent-pink);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: left;
+      padding-left: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+    .secret-voucher-card {
+      background: linear-gradient(135deg, rgba(255, 183, 3, 0.2), rgba(216, 180, 254, 0.2));
+      border: 2px dashed var(--accent-pink);
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 20px;
+      text-align: center;
+      box-shadow: var(--neon-glow);
+    }
+    .voucher-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--accent-pink);
+      margin-bottom: 10px;
+    }
+    .voucher-code {
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin: 15px 0 8px 0;
+    }
+    .voucher-funny-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body data-theme="velvet">
+
+  <div class="heart-bg" id="heartContainer"></div>
+
+  <div class="quiz-wrapper">
+    <section class="card quiz-card glitch-card quiz-card-page" id="quizSection">
+      <h2 class="glitch-text" data-text="How Well Do You Know Me? 🎮">How Well Do You Know Me? 🎮</h2>
+      <p class="section-subtext">Answer all 10 questions correctly to unlock a secret pass!</p>
+
+      <div id="quizContainer">
+        <div class="quiz-progress-bar"><div id="quizProgress" style="width: 10%;"></div></div>
+        <div class="quiz-question-number" id="quizNum">Question 1 of 10</div>
+        <div class="quiz-question" id="quizQuestion">Loading question...</div>
+        <div class="quiz-options" id="quizOptions"></div>
+      </div>
+
+      <!-- Secret Reward Revealed After Quiz Victory -->
+      <div id="secretGallery" class="secret-gallery" style="display: none;">
+        <h3 class="glitch-text" data-text="🎉 GRAND SECRET UNLOCKED! 🎉">🎉 GRAND SECRET UNLOCKED! 🎉</h3>
+        <p>You know me inside out! Here is your exclusive reward:</p>
+
+        <div class="secret-voucher-card">
+          <div class="voucher-title">✨ VIP Velvet Pass ✨</div>
+          <p><strong>1x Unlimited Midnight Snack Run & Cuddle Pass</strong></p>
+          <p style="font-size: 0.9rem; margin-top: 8px; color: var(--text-muted);">
+            Redeemable anytime, anywhere! No arguments allowed. 😘
+          </p>
+          <div class="voucher-code">CLAIM CODE: LOVE-PERFECT-10</div>
+          <p class="voucher-funny-note">⚠️ Disclaimer: Screenshot it before I pretend I never created this pass! 😜</p>
+        </div>
+      </div>
+
+      <a href="index.html" class="back-link">← Return to main page</a>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
