@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Question... 🌹</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    .date-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .date-card {
+      max-width: 550px;
+      width: 90%;
+      position: relative;
+      overflow: hidden;
+    }
+    .date-card h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.2rem;
+      color: var(--accent-pink);
+      text-shadow: 0 0 10px var(--accent-pink);
+      margin-bottom: 15px;
+    }
+    .date-card p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .date-details {
+      background: var(--timer-bg);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 183, 3, 0.35);
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      font-weight: 600;
+      color: var(--accent-pink);
+      box-shadow: var(--neon-glow);
+    }
+    .secret-code-box {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(216, 180, 254, 0.1);
+      border: 1px dashed var(--accent-cyan);
+      border-radius: 10px;
+      color: var(--accent-cyan);
+      font-size: 0.95rem;
+    }
+    .guilt-msg {
+      min-height: 28px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      text-shadow: 0 0 8px var(--accent-cyan);
+      margin-top: 15px;
+      transition: opacity 0.2s ease;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 15px;
+      position: relative;
+      min-height: 160px;
+    }
+    .btn-yes {
+      background: #ffb703;
+      color: #130a1e;
+      border: none;
+      padding: 14px 40px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 183, 3, 0.6);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      z-index: 2;
+    }
+    .btn-yes:hover {
+      transform: scale(1.15);
+      background: #ffa200;
+      box-shadow: 0 0 25px rgba(255, 183, 3, 0.9);
+    }
+    .btn-no {
+      background: var(--accent-red);
+      color: white;
+      border: none;
+      padding: 14px 35px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 3;
+      box-shadow: var(--neon-glow);
+    }
+    .back-link {
+      margin-top: 25px;
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back-link:hover {
+      color: var(--accent-pink);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body data-theme="velvet">
+
+  <!-- CRT Screen overlay for arcade feel -->
+  <div class="crt-overlay"></div>
+
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-btn active" data-theme="velvet" title="Velvet Eclipse">✨</button>
+    <button class="theme-btn" data-theme="synthwave" title="Neon Synthwave">🌆</button>
+    <button class="theme-btn" data-theme="frost" title="Nordic Frost">❄️</button>
+  </div>
+
+  <div class="heart-bg" id="heartContainer"></div>
+
+  <div class="date-wrapper">
+    <div class="card date-card glitch-card" id="questionCard">
+      <h1 class="glitch-text" data-text="Will You Go On A Date With Me? 🌹">Will You Go On A Date With Me? 🌹</h1>
+      <p>I’ve loved looking through all our memories, but I think it’s time we made a new one together.</p>
+
+      <div class="date-details">
+        ✨ Date • Pictures • New Memories ✨
+      </div>
+
+      <div class="guilt-msg" id="guiltMsg"></div>
+
+      <div class="btn-group" id="btnGroup">
+        <button class="btn-yes" id="yesBtn">Yes! 🥰</button>
+        <button class="btn-no" id="noBtn">No 😜</button>
+      </div>
+
+      <a href="index.html" class="back-link">← Back to main page</a>
+    </div>
+
+    <div class="card date-card glitch-card" id="successCard" style="display: none;">
+      <h1 class="glitch-text" data-text="It’s A Date! 🎉❤️">It’s A Date! 🎉❤️</h1>
+      <p>I knew you couldn't say no! I can't wait to spend this special time with you.</p>
+      <div class="date-details">
+        See you soon, my love! I love you, baby! ❤️💚💙🩵🧡💛💜🖤🤍🩷💗
+      </div>
+
+      <!-- Konami Code Revelation -->
+      <div class="secret-code-box">
+        <strong>🎮 Secret Cheat Code Unlocked:</strong><br>
+        On the main page, type this on your keyboard: <br>
+        <code style="font-weight: bold; letter-spacing: 2px;">↑ ↑ ↓ ↓ ← → ← → B A</code>
+      </div>
+
+      <a href="index.html" class="back-link">← Return to memories</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function triggerPetals() {
+      const petals = ['🌹', '🌸', '✨', '❤️'];
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const petal = document.createElement('div');
+          petal.classList.add('petal');
+          petal.innerHTML = petals[Math.floor(Math.random() * petals.length)];
+          petal.style.left = Math.random() * 100 + 'vw';
+          petal.style.animationDuration = Math.random() * 2 + 2.5 + 's';
+          document.body.appendChild(petal);
+          setTimeout(() => petal.remove(), 3500);
+        }, i * 50);
+      }
+    }
+
+    const guiltMessages = [
+        "Nice try! You can't catch me anyway! 😜",
+        "Are you really sure? 🥺",
+        "Think about all our cute memories! ❤️",
+        "Are you breaking my heart right now? 💔",
+        "Wrong button! Try the yellow one! 👉👈",
+        "I'll give you hugs and kisses! 😘",
+        "Babe, it's a date! Trust me, you'll love it! 🥰",
+        "Did I make you mad again? Come on! Forgive your future husband! 😭",
+        "Hottie! 🤤 You know you can't resist me! 🤤",
+        "Look on the bright side! I'm asking you out! 😎",
+        "You're going to make me cry... 😭",
+        "Look at what you're doing to us! 🥀",
+        "Baby, I'll finish you! 😭",
+        "Phatass, how dare you say no to me? 😗",
+        "I am going to beat you! 🤤",
+        "Top 10 ways to make your boyfriend mad! 🤣",
+        "My Love, forgive this corrupted soul for his discrepancies! 🫶",
+        "I'm running out of things to say lmao 😆",
+        "Woman, I will end you! 😒 ",
+        "Just so you know, I love you and I want to spend time with you! 💞",
+        "Just press YES already! ❤️"
+    ];
+
+    const noBtn = document.getElementById('noBtn');
+    const questionCard = document.getElementById('questionCard');
+    const guiltMsg = document.getElementById('guiltMsg');
+    let messageIndex = 0;
+
+    function dodgeNoBtn() {
+      const cardRect = questionCard.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const minX = - (cardRect.width / 2) + (btnRect.width / 2) + 20;
+      const maxX = (cardRect.width / 2) - (btnRect.width / 2) - 20;
+      const minY = -30;
+      const maxY = 60;
+
+      const randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+      const randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+      guiltMsg.innerText = guiltMessages[messageIndex];
+      messageIndex = (messageIndex + 1) % guiltMessages.length;
+    }
+
+    noBtn.addEventListener('mouseenter', dodgeNoBtn);
+    noBtn.addEventListener('click', dodgeNoBtn);
+
+    const yesBtn = document.getElementById('yesBtn');
+    const successCard = document.getElementById('successCard');
+
+    yesBtn.addEventListener('click', () => {
+      questionCard.style.display = 'none';
+      successCard.style.display = 'block';
+      triggerPetals();
+    });
+  </script>
+</body>
+</html>
