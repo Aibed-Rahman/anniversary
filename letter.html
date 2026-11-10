@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Love Letter For You 💌</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    .letter-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Theme-Blending Letter Paper Design with Subtle Ruled Lines */
+    .notebook-paper {
+      max-width: 680px;
+      width: 100%;
+      min-height: 460px;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      /* Subtle vertical margin line and horizontal ruled lines that adapt to theme text color opacity */
+      background-image:
+        linear-gradient(90deg, transparent 45px, rgba(255, 183, 3, 0.15) 45px, rgba(255, 183, 3, 0.15) 47px, transparent 47px),
+        repeating-linear-gradient(transparent, transparent 31px, rgba(255, 255, 255, 0.08) 31px, rgba(255, 255, 255, 0.08) 32px);
+      background-size: 100% 100%;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 183, 3, 0.25);
+      box-shadow: var(--neon-glow);
+      padding: 40px 40px 40px 70px; /* Extra left padding for margin line alignment */
+      position: relative;
+      color: var(--text-main);
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), background 0.8s ease, border 0.8s ease;
+    }
+
+    /* Decorative Stamp / Wax Seal in the corner */
+    .paper-stamp {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      width: 55px;
+      height: 55px;
+      background: radial-gradient(circle, var(--accent-pink) 0%, var(--accent-red) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--neon-glow);
+      font-size: 1.6rem;
+      transform: rotate(12deg);
+      border: 2px dashed rgba(255, 255, 255, 0.6);
+    }
+
+    .letter-page-content {
+      display: none;
+      animation: paperFlip 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .letter-page-content.active {
+      display: block;
+    }
+
+    @keyframes paperFlip {
+      0% {
+        opacity: 0;
+        transform: rotateX(15deg) translateY(15px);
+      }
+      100% {
+        opacity: 1;
+        transform: rotateX(0deg) translateY(0);
+      }
+    }
+
+    .letter-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: var(--accent-pink);
+      text-shadow: 0 0 8px var(--accent-pink);
+      margin-bottom: 25px;
+      line-height: 32px; /* Matches ruled lines */
+    }
+
+    .letter-body {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.45rem;
+      line-height: 32px; /* Perfectly aligns with background notebook lines (32px) */
+      color: var(--text-main);
+      margin-bottom: 40px;
+    }
+
+    .letter-body p {
+      margin-bottom: 32px;
+    }
+
+    .letter-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px dashed rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+
+    .page-indicator {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .letter-nav-btn {
+      font-family: 'Poppins', sans-serif;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--accent-pink);
+      color: var(--text-main);
+      padding: 10px 22px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--neon-glow);
+      transition: all 0.3s ease;
+    }
+
+    .letter-nav-btn:hover:not(:disabled) {
+      background: var(--accent-pink);
+      color: var(--bg-gradient);
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px var(--accent-pink);
+    }
+
+    .letter-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .back-link {
+      margin-top: 25px;
+      display: inline-block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: var(--accent-pink);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body data-theme="velvet">
+
+  <!-- CRT Screen Overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-btn active" data-theme="velvet" title="Velvet Eclipse">✨</button>
+    <button class="theme-btn" data-theme="synthwave" title="Neon Synthwave">🌆</button>
+    <button class="theme-btn" data-theme="frost" title="Nordic Frost">❄️</button>
+  </div>
+
+  <div class="heart-bg" id="heartContainer"></div>
+
+  <div class="letter-wrapper">
+    <div class="notebook-paper glitch-card">
+      <div class="paper-stamp">💌</div>
+
+      <!-- Page 1 -->
+      <div class="letter-page-content active" id="page1">
+        <h2 class="letter-title">Dear Baby,</h2>
+        <div class="letter-body">
+          <p>
+            Happy Anniversary! 🥳 I can't believe it has been two years since we got together! So much has happened
+            with both of us changing a lot in various ways. But before I get into that, I'm sure you are wondering
+            how and when I got the time to do all this. By now, you have probably guessed that it took quite some
+            time. Well, to start things off, I started making this webpage for two reasons! One, I wanted to give you
+            a good surprise and after making the portfolio, I realized I could do this with AI. Sue me but I know
+            nothing about HTML/CSS stuff besides the bare minimum we learned together to pass. So, from Lab 5 onwards,
+            I began working on this, constantly modifying and improving it when I got the time... which wasn't much.
+            Time was the biggest issue. I wanted to add numerous more features to it but you saw how badly we were
+            pressed for time. Nonetheless, I squeezed time as much as I could and made this just for you! Let me know what you think
+            about the Quiz and Date sections (the other two buttons besides the Letter one)!
+          </p>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="letter-page-content" id="page2">
+        <h2 class="letter-title">My Eternal Love</h2>
+        <div class="letter-body">
+          <p>
+            You know what's cool about this? I can write each part on each page! And because I'm not restricted here,
+            i can type as much as I want! Don't worry, I won't make you read through an essay lmao 🤣 I'm hoping you
+            read my letter first before this. You should, considering I would show this webpage as the final gift to
+            you!
+            We've come a long way! I think we can both clearly say that we have changed a lot in the past two years!
+            It feels surreal to think about it. It feels like yesterday when I spoke with you for the first time and
+            we walked to New Market together, had our first date before we officially became a couple, announced each
+            other as girlfriend and boyfriend casually like we were eating ice cream, and so on! One thing I have to
+            say, you have changed a lot for the better! I remember how shy and timid you used to be and look at you
+            now! You smack talk people (something I do usually), stand up for yourself (became more confident), deny
+            others when they are pushing it too much (you didn't have the heart to deny before), and of course, love
+            me in such a special way that nobody else could! If I was given a second chance at life and asked what I
+            would do differently, I would probably try to make sure I had more money on me so that I could take you
+            out and buy gifts for you. You can say you don't need it but I want to because you deserve it for
+            everything you've done for me! Nobody in my entire life has loved me in a way that you have and nobody
+            will! That special place in my heart will belong to you, always and forever, my love!
+          </p>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <div class="letter-page-content" id="page3">
+        <h2 class="letter-title">My Future Wife</h2>
+        <div class="letter-body">
+          <p>
+            Don't worry, this is the last page! I make it any long, you'll murder me for writing essays as letters!
+            I know you have heard this before, but I always pray for the both of us! It started as something I felt
+            shy about at first but as time went on, it just felt right. Because if there's anyone that I can talk to
+            about my personal wants and needs, besides you, it's Allah! And I am and always will be grateful that he
+            led me to find you. All the hardships, suffering, pain, journeying, etc. are 5000% worth it for you!
+            I think you can understand by now that no amount of words can express how much I love you! I know you are
+            skeptical sometimes because so many boys and girls cheat on their loved ones nowadays but I promise you
+            here once again! <br>
+            1) I promise I will never stop loving you! <br>
+            2) I promise I will never leave you! <br>
+            3) I promise I will cherish you the way I do now for the rest of eternity! <br>
+            4) I promise I will be by your side by the end of time and I pray that I can! <br>
+            Trust me when I tell you there is so much more I could write, but it would just become repetitive and
+            cumbersome to read through. I know you wouldn't mind and would love to read it anyway... I'm actually
+            running out of time so forgive meeeeeeeeee! Oh right! One last thing! You remember the massive 'I love
+            you' paragraphs we would give each other in goodnight texts? We haven't done that due to time constraints,
+            right? I can't do that in letters properly due to space and time so I will do it here! <br>
+            <br>
+            I love youuuuuuuuuu, babyyyyyyyyyy! I love youuuuuuuuuu soooooooooo sooooooooooooooo muchhhhhhhhhh,
+            babyyyyyyyyyy! I love youuuuuuuuuu, more than my life and more than anything! I love youuuuuuuuuu,
+            always and forever, my sweetheart, darling, cutie pie, cupcake, milkshake, ice cream, sugar pie, honey
+            bun, apple pie, my true bestie, my love, my hero, my jaan, my loveline, my soulmate, my sunshine, my moon,
+            my moonlight, my strawbaby, my prince charming, my princess, my queen, my happiness, my call duck, my
+            diamond, my mocha bear, my sweet baby doll, my kuchu-puchu, my smol babyyyyyyyyyy, my hottie, my eternal
+            flower, my babyyyyyyyyyy, my angel, my ethereal goddess, my cherry baeeeeeeeeee, my loveliest, sweetest,
+            kindest, cutest, most caring, most loving, most beautiful, drop-dead gorgeous, hottest, curviest,
+            lust-worthy, drool-worthy, and sexiest girlfriend plus my hottie girlfie plus adorable cutest heroic
+            romantic future wife plus kindest sweetest greatest most responsible future mother of our children, my
+            everything! 😭😭😭😭😭😚😚😚😚😚🫂🫂🫂🫂🫂💎💎💎💎💎🦆🦆🦆🦆🦆🩷🩷🩷🩷🩷🩷🩷🩷🩷👉👈✨ <br>
+            I love youuuuuuuuuu infinitely, amore mio! 😭😭😭😭😭😚😚😚😚😚🩷🩷🩷🩷🩷🩷🩷🩷🩷🩷👉👈✨
+          </p>
+        </div>
+      </div>
+
+      <!-- Page Navigation Footer -->
+      <div class="letter-footer">
+        <button class="letter-nav-btn" id="prevPageBtn" onclick="changePage(-1)" disabled>← Previous</button>
+        <span class="page-indicator" id="pageIndicator">Page 1 of 3</span>
+        <button class="letter-nav-btn" id="nextPageBtn" onclick="changePage(1)">Next →</button>
+      </div>
+
+    </div>
+
+    <a href="index.html" class="back-link">← Return to main page</a>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    let currentPage = 1;
+    const totalPages = 3;
+
+    function changePage(direction) {
+      const prevBtn = document.getElementById('prevPageBtn');
+      const nextBtn = document.getElementById('nextPageBtn');
+      const indicator = document.getElementById('pageIndicator');
+
+      // Hide current page
+      document.getElementById(`page${currentPage}`).classList.remove('active');
+
+      currentPage += direction;
+
+      // Show new page
+      document.getElementById(`page${currentPage}`).classList.add('active');
+
+      indicator.innerText = `Page ${currentPage} of ${totalPages}`;
+
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+  </script>
+</body>
+</html>
